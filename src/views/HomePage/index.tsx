@@ -1,58 +1,16 @@
 import React, { useState } from "react";
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Breadcrumb, Layout, theme } from "antd";
+import { Outlet } from "react-router-dom";
+import MainMenu from "@/components/MainMenu";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-type MenuItem = Required<MenuProps>["items"][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
-
-const items: MenuItem[] = [
-  getItem("about", "/about", <PieChartOutlined />),
-  getItem("user", "/user", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  // getItem("Team", "sub2", <TeamOutlined />, [
-  //   getItem("Team 1", "6"),
-  //   getItem("Team 2", "8"),
-  // ]),
-  getItem("Files", "9", <FileOutlined />),
-];
-
 const Home: React.FC = () => {
-  const navigateTo = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  
-  const onClickMenu = (e: {key: string}) => {
-    navigateTo(e.key);
-  };
+
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -68,13 +26,7 @@ const Home: React.FC = () => {
             background: "rgba(255, 255, 255, 0.2)",
           }}
         />
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-          onClick={onClickMenu}
-        />
+        <MainMenu />
       </Sider>
 
       <Layout className="site-layout">
@@ -85,7 +37,7 @@ const Home: React.FC = () => {
           </Breadcrumb>
         </Header>
 
-        <Content style={{ margin: "16px",padding: "16px", background: colorBgContainer }}>
+        <Content style={{ margin: "16px", padding: "16px", background: colorBgContainer }}>
           <Outlet />
         </Content>
 
