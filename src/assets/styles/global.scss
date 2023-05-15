@@ -1,13 +1,42 @@
-$color: #eee8ee;
+$border-color: #6ba5f7;
+$font-color: white;
 
 body {
     // background: $color;
 
     // 禁用文字选中
-    user-select: none;
+    // user-select: none;
 }
 
 img {
     // 禁用图片拖动
     --webkit-user-drag: none;
+}
+
+@mixin opacity-background-box($borderColor: $border-color, $fontColor: $font-color) {
+    background-color: rgba(0, 0, 0, 0);
+    border-color: $borderColor;
+    color: $fontColor;
+
+    .ant-input-suffix svg {
+        color: $borderColor;
+    }
+}
+
+@mixin placeholder {
+    &::placeholder {
+        color: #ccc;
+    };
+}
+
+.opacity-input {
+    @include opacity-background-box;
+
+    .ant-input {
+        @include opacity-background-box;
+
+        @include placeholder;
+    }
+
+    @include placeholder;
 }
